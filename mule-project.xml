@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mule-project xmlns="http://www.mulesoft.com/tooling/project" runtimeId="org.mule.tooling.server.3.4.1.ee">
+    <name>admission-main-service</name>
+    <description></description>
+    <muleExtension name="Apikit" qualifier="org.mule.tooling.apikit"/>
+    <muleExtension name="Cloudhub" qualifier="org.mule.tooling.ui.contribution.cloudhub"/>
+</mule-project>

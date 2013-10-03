@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="mocks">
+    <global-element name="DataMapper" type="http://www.mulesoft.org/schema/mule/ee/data-mapper/config" entity-id="DataMapper#1">
+        <properties>
+            <property name="name" value="insurance_request_to_insurance_response"/>
+            <property name="transformationGraphPath" value="insurance_request_to_insurance_response.grf"/>
+            <property name="auxiliary;index" value="1"/>
+        </properties>
+    </global-element>
+    <global-element name="DataMapper" type="http://www.mulesoft.org/schema/mule/ee/data-mapper/config" entity-id="DataMapper#2">
+        <properties>
+            <property name="name" value="insurance_request_to_insurance_request_rejected"/>
+            <property name="transformationGraphPath" value="insurance_request_to_insurance_request_rejected.grf"/>
+            <property name="auxiliary;index" value="2"/>
+        </properties>
+    </global-element>
+    <global-element name="DataMapper" type="http://www.mulesoft.org/schema/mule/ee/data-mapper/config" entity-id="DataMapper#3">
+        <properties>
+            <property name="name" value="upsert_patient_to_upsert_patient_response"/>
+            <property name="transformationGraphPath" value="upsert_patient_to_upsert_patient_response.grf"/>
+            <property name="auxiliary;index" value="3"/>
+        </properties>
+    </global-element>
+    <global-element name="DataMapper" type="http://www.mulesoft.org/schema/mule/ee/data-mapper/config" entity-id="DataMapper#4">
+        <properties>
+            <property name="name" value="get_patient_to_get_patient_response"/>
+            <property name="transformationGraphPath" value="get_patient_to_get_patient_response.grf"/>
+            <property name="auxiliary;index" value="4"/>
+        </properties>
+    </global-element>
+    <global-element name="DataMapper" type="http://www.mulesoft.org/schema/mule/ee/data-mapper/config" entity-id="DataMapper#5">
+        <properties>
+            <property name="name" value="create_episode_to_create_episode_response"/>
+            <property name="transformationGraphPath" value="create_episode_to_create_episode_response.grf"/>
+            <property name="auxiliary;index" value="5"/>
+        </properties>
+    </global-element>
+    <global-element name="DataMapper" type="http://www.mulesoft.org/schema/mule/ee/data-mapper/config" entity-id="DataMapper#6">
+        <properties>
+            <property name="name" value="find_episodes_to_find_episodes_response"/>
+            <property name="transformationGraphPath" value="find_episodes_to_find_episodes_response.grf"/>
+            <property name="auxiliary;index" value="6"/>
+        </properties>
+    </global-element>
+    <global-element name="DataMapper" type="http://www.mulesoft.org/schema/mule/ee/data-mapper/config" entity-id="DataMapper#7">
+        <properties>
+            <property name="name" value="create_bill_to_create_bill_response"/>
+            <property name="transformationGraphPath" value="create_bill_to_create_bill_response.grf"/>
+            <property name="auxiliary;index" value="7"/>
+        </properties>
+    </global-element>
+    <global-element name="DataMapper" type="http://www.mulesoft.org/schema/mule/ee/data-mapper/config" entity-id="DataMapper#8">
+        <properties>
+            <property name="name" value="audit_request_to_audit_response"/>
+            <property name="transformationGraphPath" value="audit_request_to_audit_response.grf"/>
+            <property name="auxiliary;index" value="8"/>
+        </properties>
+    </global-element>
+    <flow SubFlow="false" name="PatientService" entity-id="08adf845-0a2e-4be7-bbe5-250b9c240ebe">
+        <properties>
+            <property name="processingStrategy2"/>
+            <property name="processingStrategy"/>
+            <property name="bussinessEventsLabel"/>
+            <property name="tracking:enable-default-events"/>
+            <property name="auxiliary;index" value="9"/>
+        </properties>
+        <description>Creates or locates existing patient records in the hospital's system.</description>
+        <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#1">
+            <endpoint direction="Inbound" message-exchange-pattern="RequestResponse" name="PatientService" type="http://www.mulesoft.org/schema/mule/http/endpoint" entity-id="HTTP#1">
+                <properties>
+                    <property name="exchange-pattern" value="request-response"/>
+                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/http/endpoint"/>
+                    <property name="httpLabel"/>
+                    <property name="host" value="localhost"/>
+                    <property name="port" value="8071"/>
+                    <property name="path" value="PatientService"/>
+                    <property name="method"/>
+                    <property name="businessEventsLabel"/>
+                    <property name="tracking:enable-default-events"/>
+                    <property name="address"/>
+                    <property name="encoding"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="mimeType"/>
+                    <property name="responseTimeout"/>
+                    <property name="followRedirects"/>
+                    <property name="connector-ref"/>
+                    <property name="ref"/>
+                    <property name="transformer-refs"/>
+                    <property name="responseTransformer-refs"/>
+                    <property name="user"/>
+                    <property name="password"/>
+                    <property name="contentType"/>
+                    <property name="keep-alive"/>
+                    <property name="auxiliary;index" value="10"/>
+                </properties>
+            </endpoint>
+            <pattern name="Proxy service" type="http://www.mulesoft.org/schema/mule/cxf/soapComponent" entity-id="SOAP#1">
+                <properties>
+                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/cxf/proxy-service"/>
+                    <property name="configuration-ref"/>
+                    <property name="bindingId"/>
+                    <property name="port" value="PatientPort"/>
+                    <property name="namespace" value="http://www.mule-health.com/SOA/service/patient/1.0"/>
+                    <property name="service" value="PatientService"/>
+                    <property name="onException"/>
+                    <property name="serviceClass"/>
+                    <property name="validationEnabled"/>
+                    <property name="payload" value="body"/>
+                    <property name="wsdlLocation" value="service/PatientService.wsdl"/>
+                    <property name="mtomEnabled"/>
+                    <property name="enableMuleSoapHeaders"/>
+                    <property name="soapVersion"/>
+                    <property name="auxiliary;index" value="11"/>
+                </properties>
+            </pattern>
+            <unknown description="false" index="12" entity-id="unknown#1">
+                <content>&lt;mulexml:dom-to-xml-transformer xmlns:mulexml=&quot;http://www.mulesoft.org/schema/mule/xml&quot;/&gt;</content>
+            </unknown>
+            <pattern name="operation" type="http://www.mulesoft.org/schema/mule/core/variable-transformer" entity-id="Variable#1">
+                <properties>
+                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/core/set-variable"/>
+                    <property name="variableName" value="operation"/>
+                    <property name="value" value="#[xpath('fn:local-name(/*)')]"/>
+                    <property name="auxiliary;index" value="13"/>
+                </properties>
+            </pattern>
+            <splitter index="14" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#1">
+                <properties>
+                    <property-collection name="d09625ef-0b84-4a14-aa6a-3f89c6d47a12">
+                        <property name="choice.otherwise" value="true"/>
+                        <property-collection name="choice.attributes"/>
+                    </property-collection>
+                    <property-collection name="e8987b9c-2371-4de1-a4f6-f294ac5cfd9b">
+                        <property name="choice.expression" value="#[flowVars.operation == 'upsertPatient']"/>
+                        <property-collection name="choice.attributes">
+                            <property name="expression" value="#[flowVars.operation == 'upsertPatient']"/>
+                        </property-collection>
+                    </property-collection>
+                </properties>
+                <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#2"/>
+                <compartment entity-id="compartment#1">
+                    <lane hadOnlyOneElement="false" index="16" isChoiceOtherwiseLane="false" entity-id="e8987b9c-2371-4de1-a4f6-f294ac5cfd9b">
+                        <scope name="upsertPatient" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#1">
+                            <properties>
+<property name="auxiliary;index" value="16"/>
+                            </properties>
+                            <compartment entity-id="compartment#2">
+<lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#2">
+    <pattern name="&lt;upsertPatientRequest /&gt; to &lt;upsertPatientResponse /&gt;" type="http://www.mulesoft.org/schema/mule/ee/data-mapper/data-mapper-connector" entity-id="DataMapper#9">
+        <properties>
+            <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/ee/data-mapper/transform"/>
+            <property name="config-ref" value="upsert_patient_to_upsert_patient_response"/>
+            <property name="input-ref"/>
+            <property name="returnClass"/>
+            <property name="stream"/>
+            <property name="pipeSize"/>
+            <property name="auxiliary;index" value="17"/>
+        </properties>
+    </pattern>
+</lane>
+                            </compartment>
+                        </scope>
+                    </lane>
+                    <lane hadOnlyOneElement="false" index="19" isChoiceOtherwiseLane="true" entity-id="d09625ef-0b84-4a14-aa6a-3f89c6d47a12">
+                        <scope name="getPatient" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#2">
+                            <properties>
+<property name="auxiliary;index" value="19"/>
+                            </properties>
+                            <compartment entity-id="compartment#3">
+<lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#3">
+    <pattern name="&lt;getPatient /&gt; to &lt;getPatientResponse /&gt;" type="http://www.mulesoft.org/schema/mule/ee/data-mapper/data-mapper-connector" entity-id="DataMapper#10">
+        <properties>
+            <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/ee/data-mapper/transform"/>
+            <property name="config-ref" value="get_patient_to_get_patient_response"/>
+            <property name="input-ref"/>
+            <property name="returnClass"/>
+            <property name="stream"/>
+            <property name="pipeSize"/>
+            <property name="auxiliary;index" value="20"/>
+        </properties>
+    </pattern>
+</lane>
+                            </compartment>
+                        </scope>
+                    </lane>
+                </compartment>
+            </splitter>
+        </lane>
+        <apikit>false</apikit>
+    </flow>
+    <flow SubFlow="false" name="EHRService" entity-id="488634a5-d1a1-40de-ac62-67610159bb21">
+        <properties>
+            <property name="processingStrategy2"/>
+            <property name="processingStrategy"/>
+            <property name="bussinessEventsLabel"/>
+            <property name="tracking:enable-default-events"/>
+            <property name="auxiliary;index" value="21"/>
+        </properties>
+        <description>Creates or locates existing patient episodes in the hospital's system.</description>
+        <lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#4">
+            <endpoint direction="Inbound" message-exchange-pattern="RequestResponse" name="EHRService" type="http://www.mulesoft.org/schema/mule/http/endpoint" entity-id="HTTP#2">
+                <properties>
+                    <property name="exchange-pattern" value="request-response"/>
+                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/http/endpoint"/>
+                    <property name="httpLabel"/>
+                    <property name="host" value="localhost"/>
+                    <property name="port" value="8071"/>
+                    <property name="path" value="EHRService"/>
+                    <property name="method"/>
+                    <property name="businessEventsLabel"/>
+                    <property name="tracking:enable-default-events"/>
+                    <property name="address"/>
+                    <property name="encoding"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="mimeType"/>
+                    <property name="responseTimeout"/>
+                    <property name="followRedirects"/>
+                    <property name="connector-ref"/>
+                    <property name="ref"/>
+                    <property name="transformer-refs"/>
+                    <property name="responseTransformer-refs"/>
+                    <property name="user"/>
+                    <property name="password"/>
+                    <property name="contentType"/>
+                    <property name="keep-alive"/>
+                    <property name="auxiliary;index" value="22"/>
+                </properties>
+            </endpoint>
+            <pattern name="Proxy service" type="http://www.mulesoft.org/schema/mule/cxf/soapComponent" entity-id="SOAP#2">
+                <properties>
+                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/cxf/proxy-service"/>
+                    <property name="configuration-ref"/>
+                    <property name="bindingId"/>
+                    <property name="port" value="EHRPort"/>
+                    <property name="namespace" value="http://www.mule-health.com/SOA/service/ehr/1.0"/>
+                    <property name="service" value="EHRService"/>
+                    <property name="onException"/>
+                    <property name="serviceClass"/>
+                    <property name="validationEnabled"/>
+                    <property name="payload" value="body"/>
+                    <property name="wsdlLocation" value="service/EHRService.wsdl"/>
+                    <property name="mtomEnabled"/>
+                    <property name="enableMuleSoapHeaders"/>
+                    <property name="soapVersion"/>
+                    <property name="auxiliary;index" value="23"/>
+                </properties>
+            </pattern>
+            <unknown description="false" index="24" entity-id="unknown#2">
+                <content>&lt;mulexml:dom-to-xml-transformer xmlns:mulexml=&quot;http://www.mulesoft.org/schema/mule/xml&quot;/&gt;</content>
+            </unknown>
+            <pattern name="operation" type="http://www.mulesoft.org/schema/mule/core/variable-transformer" entity-id="Variable#2">
+                <properties>
+                    <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/core/set-variable"/>
+                    <property name="variableName" value="operation"/>
+                    <property name="value" value="#[xpath('fn:local-name(/*)')]"/>
+                    <property name="auxiliary;index" value="25"/>
+                </properties>
+            </pattern>
+            <splitter index="26" name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#3">
+                <properties>
+                    <property-collection name="429c7f7e-1086-4b7a-8439-4b61b915a282">
+                        <property name="choice.otherwise" value="true"/>
+                        <property-collection name="choice.attributes"/>
+                    </property-collection>
+                    <property-collection name="b8eaae76-68d4-46d1-a234-98a45b4aa0b5">
+                        <property name="choice.expression" value="#[flowVars.operation == 'createEpisode']"/>
+                        <property-collection name="choice.attributes">
+                            <property name="expression" value="#[flowVars.operation == 'createEpisode']"/>
+                        </property-collection>
+                    </property-collection>
+                </properties>
+                <pattern name="Choice" type="org.mule.tooling.ui.modules.core.pattern.cbr" entity-id="Choice#4"/>
+                <compartment entity-id="compartment#4">
+                    <lane hadOnlyOneElement="false" index="28" isChoiceOtherwiseLane="false" entity-id="b8eaae76-68d4-46d1-a234-98a45b4aa0b5">
+                        <scope name="createEpisode" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#3">
+                            <properties>
+<property name="auxiliary;index" value="28"/>
+                            </properties>
+                            <compartment entity-id="compartment#5">
+<lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#5">
+    <pattern name="&lt;createEpisode /&gt; to &lt;createEpisodeResponse /&gt;" type="http://www.mulesoft.org/schema/mule/ee/data-mapper/data-mapper-connector" entity-id="DataMapper#11">
+        <properties>
+            <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/ee/data-mapper/transform"/>
+            <property name="config-ref" value="create_episode_to_create_episode_response"/>
+            <property name="input-ref"/>
+            <property name="returnClass"/>
+            <property name="stream"/>
+            <property name="pipeSize"/>
+            <property name="auxiliary;index" value="29"/>
+        </properties>
+    </pattern>
+</lane>
+                            </compartment>
+                        </scope>
+                    </lane>
+                    <lane hadOnlyOneElement="false" index="31" isChoiceOtherwiseLane="true" entity-id="429c7f7e-1086-4b7a-8439-4b61b915a282">
+                        <scope name="findEpisode" type="http://www.mulesoft.org/schema/mule/core/processor-chain" entity-id="Processor Chain#4">
+                            <properties>
+<property name="auxiliary;index" value="31"/>
+                            </properties>
+                            <compartment entity-id="compartment#6">
+<lane hadOnlyOneElement="false" index="0" isChoiceOtherwiseLane="false" entity-id="compartment-lane#6">
+    <pattern name="&lt;findEpisode /&gt; to &lt;findEpisodeResponse /&gt;" type="http://www.mulesoft.org/schema/mule/ee/data-mapper/data-mapper-connector" entity-id="DataMapper#12">
+        <properties>
+            <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/ee/data-mapper/transform"/>
+            <property name="config-ref" value="find_episodes_to_find_episodes_response"/>
+            <property name="input-ref"/>
+            <property name="returnClass"/>
+            <property name="stream"/>
+            <property name="pipeSize"/>
+            <property name="auxiliary;index" value="32"/>
+        </properties>
+    </pattern>
+</lane>
+                            </compartment>
+                        </scope>
+                    </lane>
+                </compartment>
+            </splitter>
+        </lane>
+        <apikit>false</apikit>
+    </flow>
+</mule-configuration>
